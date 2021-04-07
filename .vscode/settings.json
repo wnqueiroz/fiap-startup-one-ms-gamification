@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    ".{huskyrc,lintstagedrc}": "json"
+  },
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}
