@@ -4,11 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
-  OneToOne,
 } from 'typeorm';
-
-import { UserEntity } from './user.entity';
 
 @Entity({
   name: 'progress',
@@ -36,18 +32,6 @@ export class ProgressEntity {
     nullable: false,
   })
   nextLevel: number;
-
-  @Column('uuid', {
-    nullable: false,
-  })
-  idUser: string;
-
-  @OneToOne(
-    () => UserEntity,
-    userEntity => userEntity.id,
-  )
-  @JoinColumn({ name: 'idUser' })
-  user: UserEntity;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -27,11 +27,13 @@ export class UserService {
   }
 
   async finishAppointment(idUser: string): Promise<UserEntity> {
-    const user = this.userRepository.findOne({ where: { id: idUser } });
-    const progress = await this.applyProgressRule(
-      idUser,
-      (await user).progress,
-    );
+    const user = await this.userRepository.findOne({
+      where: { id: idUser },
+      relations: ['progress'],
+    });
+
+    if (!user) return await this.createUser(idUser);
+    const progress = await this.createProgressEvolution(user.progress);
 
     const savedProgress = this.progressRepository.save(progress);
 
@@ -43,39 +45,40 @@ export class UserService {
     return this.userRepository.save(userEntity);
   }
 
-  async applyProgressRule(
-    idUser: string,
-    actualProgress: ProgressEntity,
-  ): Promise<ProgressEntity> {
-    if (!actualProgress) return await this.createInitialProgress(idUser);
+  async createUser(idUser: string): Promise<UserEntity> {
+    const progress = await this.createInitialProgress();
 
-    return await this.createProgressEvolution(idUser, actualProgress);
+    const user = this.userRepository.create({
+      id: idUser,
+      credits: 0,
+      idProgress: progress.id,
+    });
+
+    return this.userRepository.save(user);
   }
 
-  async createInitialProgress(idUser: string): Promise<ProgressEntity> {
-    return this.progressRepository.create({
-      idUser: idUser,
+  async createInitialProgress(): Promise<ProgressEntity> {
+    const progress = this.progressRepository.create({
       currentExperience: 0,
       experienceToNextLevel: 64,
       currentLevel: 1,
       nextLevel: 2,
     });
+
+    return this.progressRepository.save(progress);
   }
 
   async createProgressEvolution(
-    idUser: string,
     actualProgress: ProgressEntity,
   ): Promise<ProgressEntity> {
-    const evolvedProgress =
-      (await actualProgress).currentExperience +
-      (await actualProgress).currentExperience /
-        (await actualProgress).currentLevel;
+    const evolvedExperience =
+      actualProgress.currentExperience +
+      actualProgress.currentExperience / actualProgress.currentLevel;
     const evolvedExperienceToNextLevel =
-      (await actualProgress).currentExperience - evolvedProgress;
+      actualProgress.currentExperience - evolvedExperience;
 
     return this.progressRepository.create({
-      idUser: idUser,
-      currentExperience: evolvedProgress,
+      currentExperience: evolvedExperience,
       experienceToNextLevel: evolvedExperienceToNextLevel,
       currentLevel: 1,
       nextLevel: 2,

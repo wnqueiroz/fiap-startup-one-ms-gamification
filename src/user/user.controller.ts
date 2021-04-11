@@ -12,17 +12,16 @@ import {
   ApiOperation,
   ApiOkResponse,
 } from '@nestjs/swagger';
-import { KAFKA_TOPICS } from 'src/contants';
 
 import { GetCurrentUser } from '../auth/auth.annotation';
 import { CurrentUserDTO } from '../auth/dto/current-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { KAFKA_TOPICS } from '../contants';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('userGamification')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('v1/users')
 @Controller()
 export class UserController {
@@ -30,6 +29,7 @@ export class UserController {
 
   @Get('/me')
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get user progress' })
   @ApiOkResponse({
     description: 'The record has been successfully returned.',
@@ -50,7 +50,7 @@ export class UserController {
       value: any;
     },
   ): Promise<void> {
-    const { id } = message.value;
-    await this.userService.finishAppointment(id);
+    const { idUser } = message.value;
+    await this.userService.finishAppointment(idUser);
   }
 }
