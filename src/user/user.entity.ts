@@ -24,16 +24,8 @@ export class UserEntity {
   })
   credits: number;
 
-  @Column('uuid', {
-    nullable: false,
-  })
-  idProgress: string;
-
-  @OneToOne(
-    () => ProgressEntity,
-    progressEntity => progressEntity.id,
-  )
-  @JoinColumn({ name: 'idProgress' })
+  @OneToOne(() => ProgressEntity)
+  @JoinColumn()
   progress: ProgressEntity;
 
   @CreateDateColumn()

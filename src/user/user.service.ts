@@ -32,40 +32,21 @@ export class UserService {
       relations: ['progress'],
     });
 
-    if (!user) return await this.createUser(idUser);
-    const progress = await this.createProgressEvolution(user.progress);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
-    const savedProgress = this.progressRepository.save(progress);
+    const evolvedProgress = await this.createProgressEvolution(user.progress);
 
-    const userEntity = this.userRepository.create({
+    const savedProgress = await this.progressRepository.save(evolvedProgress);
+
+    const evolvedUser = this.userRepository.create({
       id: idUser,
-      idProgress: (await savedProgress).id,
+      credits: user.credits + 1,
+      progress: savedProgress,
     });
 
-    return this.userRepository.save(userEntity);
-  }
-
-  async createUser(idUser: string): Promise<UserEntity> {
-    const progress = await this.createInitialProgress();
-
-    const user = this.userRepository.create({
-      id: idUser,
-      credits: 0,
-      idProgress: progress.id,
-    });
-
-    return this.userRepository.save(user);
-  }
-
-  async createInitialProgress(): Promise<ProgressEntity> {
-    const progress = this.progressRepository.create({
-      currentExperience: 0,
-      experienceToNextLevel: 64,
-      currentLevel: 1,
-      nextLevel: 2,
-    });
-
-    return this.progressRepository.save(progress);
+    return this.userRepository.save(evolvedUser);
   }
 
   async createProgressEvolution(
