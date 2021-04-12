@@ -38,9 +38,28 @@ export class RankingService {
       .addOrderBy('progress.createdAt', 'DESC')
       .getMany();
 
-    const index = data.findIndex(({ id }) => user.id === id);
+    const userIsOnPodium = data.length <= 3;
 
-    data = data.slice(0, index + 3);
+    if (userIsOnPodium) {
+      const others = await this.userRepository
+        .createQueryBuilder('user')
+        .innerJoinAndSelect('user.progress', 'progress')
+        .where('progress.currentExperience <= :currentExperience', {
+          currentExperience: user.progress.currentExperience,
+        })
+        .andWhere('progress.currentLevel <= :currentLevel', {
+          currentLevel: user.progress.currentLevel,
+        })
+        .andWhere('user.id != :idUser', {
+          idUser: user.id,
+        })
+        .orderBy('progress.currentLevel', 'DESC')
+        .addOrderBy('progress.currentExperience', 'DESC')
+        .addOrderBy('progress.createdAt', 'DESC')
+        .getMany();
+
+      data = [...data, ...others];
+    }
 
     return data;
   }
