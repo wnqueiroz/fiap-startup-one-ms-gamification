@@ -53,4 +53,15 @@ export class UserController {
     const { idUser } = message.value;
     await this.userService.finishAppointment(idUser);
   }
+
+  @MessagePattern(KAFKA_TOPICS.USER_CREATED)
+  async createUserProgress(
+    @Payload()
+    message: {
+      value: any;
+    },
+  ): Promise<void> {
+    const { id } = message.value;
+    await this.userService.createUser(id);
+  }
 }
