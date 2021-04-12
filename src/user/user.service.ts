@@ -26,6 +26,23 @@ export class UserService {
     return userEntity;
   }
 
+  async createUser(idUser: string): Promise<UserEntity> {
+    const progressEntity = this.progressRepository.create({
+      currentExperience: 0,
+      experienceToNextLevel: 64,
+      currentLevel: 1,
+      nextLevel: 2,
+    });
+    const savedProgress = await this.progressRepository.save(progressEntity);
+
+    const userEntity = this.userRepository.create({
+      id: idUser,
+      credits: 0,
+      progress: savedProgress,
+    });
+    return await this.userRepository.save(userEntity);
+  }
+
   async finishAppointment(idUser: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
       where: { id: idUser },
