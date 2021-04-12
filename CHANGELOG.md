@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.1.0...1.2.0) (2021-04-12)
+
+
+### Funcionalidades
+
+* adding initial user creation listener ([4f3e960](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/4f3e9603f77ec599d1e6366972b731bf8985efb9))
+* adding return type in user creation ([3d41254](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/3d412548b70921e3a631c17e83eaac18432d7fcb))
+
 ## [1.1.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.0.1...1.1.0) (2021-04-11)
 
 
