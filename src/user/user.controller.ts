@@ -61,7 +61,8 @@ export class UserController {
       value: any;
     },
   ): Promise<void> {
-    const { id } = message.value;
-    await this.userService.createUser(id);
+    const { id, name } = message.value;
+
+    await this.userService.createUser({ idUser: id, name });
   }
 }

@@ -24,6 +24,11 @@ export class UserEntity {
   })
   credits: number;
 
+  @Column({
+    nullable: false,
+  })
+  name: string;
+
   @OneToOne(() => ProgressEntity)
   @JoinColumn()
   progress: ProgressEntity;
