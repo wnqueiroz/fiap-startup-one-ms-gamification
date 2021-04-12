@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { ProgressEntity } from './progress.entity';
+import { ProgressEntity } from '../progress/progress.entity';
 import { UserEntity } from './user.entity';
 
 @Injectable()

@@ -20,7 +20,7 @@ import { KAFKA_TOPICS } from '../contants';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
-@ApiTags('userGamification')
+@ApiTags('user')
 @ApiBearerAuth()
 @Controller('v1/users')
 @Controller()

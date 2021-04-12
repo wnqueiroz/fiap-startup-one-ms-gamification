@@ -7,7 +7,7 @@ import {
   OneToOne,
 } from 'typeorm';
 
-import { ProgressEntity } from './progress.entity';
+import { ProgressEntity } from '../progress/progress.entity';
 
 @Entity({
   name: 'user',
