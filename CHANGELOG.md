@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.2.0...1.3.0) (2021-04-12)
+
+
+### Funcionalidades
+
+* added new endpoint /vi/ranking ([eaf5f41](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/eaf5f41b9b3d5e2d82cad1a0e7ad308aef00f9b7))
+* added ranking files ([5824fb8](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/5824fb87ec0f25780a34ac7fd83a4a1b748c4bf2))
+* altered controller display name ([e732a68](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/e732a687ad49e85d2a387bfa8c3979033f282531))
+
 ## [1.2.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.1.0...1.2.0) (2021-04-12)
 
 
