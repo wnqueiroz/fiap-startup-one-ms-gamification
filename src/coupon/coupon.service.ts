@@ -106,8 +106,6 @@ export class CouponService {
       },
     });
 
-    console.log(userEntity.credits, couponEntity.credits);
-
     await this.userRepository.save({
       ...userEntity,
       ...{
