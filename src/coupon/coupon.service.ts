@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { UserEntity } from './../user/user.entity';
 import { CouponUserEntity } from './coupon-user.entity';
 import { CouponEntity } from './coupon.entity';
 import { CouponUserDTO } from './dto/coupon-user.dto';
@@ -19,6 +20,8 @@ export class CouponService {
     private couponRepository: Repository<CouponEntity>,
     @InjectRepository(CouponUserEntity)
     private couponUserRepository: Repository<CouponUserEntity>,
+    @InjectRepository(CouponUserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async getAll(): Promise<CouponEntity[]> {
@@ -93,6 +96,14 @@ export class CouponService {
         code: this.generateCode(),
       },
     });
+
+    const user = await this.userRepository.findOne(idUser);
+
+    if (user) {
+      user.credits -= couponEntity.credits;
+
+      this.userRepository.save(user);
+    }
 
     return this.couponUserRepository.save(couponUserEntity);
   }
