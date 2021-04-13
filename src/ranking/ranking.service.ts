@@ -50,9 +50,7 @@ export class RankingService {
         .andWhere('progress.currentLevel <= :currentLevel', {
           currentLevel: user.progress.currentLevel,
         })
-        .andWhere('user.id != :idUser', {
-          idUser: user.id,
-        })
+        .where('user.id NOT IN (:...ids)', { ids: data.map(({ id }) => id) })
         .orderBy('progress.currentLevel', 'DESC')
         .addOrderBy('progress.currentExperience', 'DESC')
         .addOrderBy('progress.createdAt', 'DESC')
