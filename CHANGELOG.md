@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.3.3...1.3.4) (2021-04-13)
+
+
+### Correções de erros
+
+* duplicates on ranking ([82aa5c6](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/82aa5c6bde9b8414cbff0b2c52d8581c5cf77f9d))
+
 ### [1.3.3](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.3.2...1.3.3) (2021-04-12)
 
 
