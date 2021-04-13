@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import { CouponUserEntity } from './coupon-user.entity';
 
 @Entity({
   name: 'coupon',
@@ -15,25 +18,33 @@ export class CouponEntity {
 
   @Column({
     nullable: false,
+    default: '',
   })
   name: string;
 
   @Column({
     nullable: false,
+    default: '',
   })
   description: string;
 
   @Column({
     nullable: false,
-    default: 30,
+    default: 0,
   })
-  validDays: number;
+  credits: number;
 
   @Column({
     nullable: false,
     default: true,
   })
   active: boolean;
+
+  @OneToMany(
+    () => CouponUserEntity,
+    couponUser => couponUser.coupon,
+  )
+  couponUsers: CouponUserEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
