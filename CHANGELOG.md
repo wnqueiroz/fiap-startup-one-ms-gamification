@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.4.1...1.5.0) (2021-04-13)
+
+
+### Funcionalidades
+
+* added endpoints "POST /v1/coupon" and "GET /v1/coupon" ([659918c](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/659918ca1711ff6d3dfb7049b2d3e6a56cf034f3))
+
 ### [1.4.1](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.4.0...1.4.1) (2021-04-13)
 
 
