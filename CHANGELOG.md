@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.6.0...1.7.0) (2021-04-13)
+
+
+### Funcionalidades
+
+* added rule to subtract user credits ([a9aebfd](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/a9aebfd8ccfbd227d6f6de1173c39e30f021d464))
+
+
+### Correções de erros
+
+* added user repository dependency injection ([d9c9aba](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/commit/d9c9aba8e5aaff16f58775d525590cf1487848ac))
+
 ## [1.6.0](https://github.com/wnqueiroz/fiap-startup-one-ms-gamification/compare/1.5.0...1.6.0) (2021-04-13)
 
 
