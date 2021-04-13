@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import { CouponModule } from './coupon/coupon.module';
 import { RankingModule } from './ranking/ranking.module';
 import { UserModule } from './user/user.module';
 
@@ -11,6 +12,7 @@ import { UserModule } from './user/user.module';
   imports: [
     RankingModule,
     UserModule,
+    CouponModule,
     ConfigModule.forRoot({
       load: [appConfig, databaseConfig],
       isGlobal: true,
