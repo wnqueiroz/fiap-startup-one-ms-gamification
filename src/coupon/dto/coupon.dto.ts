@@ -21,11 +21,6 @@ export class CouponDTO {
   active: boolean;
 
   @ApiProperty({
-    example: 30,
-  })
-  validDays: number;
-
-  @ApiProperty({
     example: '2021-02-12T19:16:03.971Z',
   })
   createdAt: Date;

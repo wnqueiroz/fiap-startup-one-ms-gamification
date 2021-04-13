@@ -19,13 +19,12 @@ export class CreateCouponDTO {
   description: string;
 
   @IsNotEmpty({
-    message:
-      'Informe a quantidade de dias de validade do cupom após ser resgatado.',
+    message: 'Informe o crédito do cupom',
   })
   @ApiProperty({
-    example: 30,
+    example: 3,
   })
-  validDays: number;
+  credits: number;
 
   constructor(partial: Partial<CreateCouponDTO>) {
     Object.assign(this, partial);
