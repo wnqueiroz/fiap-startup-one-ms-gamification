@@ -20,7 +20,7 @@ export class CouponService {
     private couponRepository: Repository<CouponEntity>,
     @InjectRepository(CouponUserEntity)
     private couponUserRepository: Repository<CouponUserEntity>,
-    @InjectRepository(CouponUserEntity)
+    @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
   ) {}
 
@@ -71,6 +71,21 @@ export class CouponService {
     idUser: string,
     createCouponUserDTO: CreateCouponUserDTO,
   ): Promise<CouponUserDTO> {
+    const couponEntity = await this.couponRepository.findOne(
+      createCouponUserDTO.idCoupon,
+    );
+
+    if (!couponEntity) throw new NotFoundException('Coupon not found');
+
+    const userEntity = await this.userRepository.findOne(idUser);
+
+    if (!userEntity) throw new NotFoundException('User not found');
+
+    if (userEntity.credits < couponEntity.credits)
+      throw new UnprocessableEntityException(
+        'Insufficient credits to the rescue of the coupon',
+      );
+
     const couponUser = await this.couponUserRepository.find({
       where: {
         idCoupon: createCouponUserDTO.idCoupon,
@@ -83,12 +98,6 @@ export class CouponService {
         'Coupon already assigned to the user',
       );
 
-    const couponEntity = await this.couponRepository.findOne(
-      createCouponUserDTO.idCoupon,
-    );
-
-    if (!couponEntity) throw new NotFoundException('Coupon not found');
-
     const couponUserEntity = this.couponUserRepository.create({
       ...createCouponUserDTO,
       ...{
@@ -97,13 +106,14 @@ export class CouponService {
       },
     });
 
-    const user = await this.userRepository.findOne(idUser);
+    console.log(userEntity.credits, couponEntity.credits);
 
-    if (user) {
-      user.credits -= couponEntity.credits;
-
-      this.userRepository.save(user);
-    }
+    await this.userRepository.save({
+      ...userEntity,
+      ...{
+        credits: userEntity.credits - couponEntity.credits,
+      },
+    });
 
     return this.couponUserRepository.save(couponUserEntity);
   }
