@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { UserEntity } from './../user/user.entity';
 import { CouponUserEntity } from './coupon-user.entity';
 import { CouponEntity } from './coupon.entity';
 import { CouponUserDTO } from './dto/coupon-user.dto';
@@ -19,6 +20,8 @@ export class CouponService {
     private couponRepository: Repository<CouponEntity>,
     @InjectRepository(CouponUserEntity)
     private couponUserRepository: Repository<CouponUserEntity>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async getAll(): Promise<CouponEntity[]> {
@@ -68,6 +71,21 @@ export class CouponService {
     idUser: string,
     createCouponUserDTO: CreateCouponUserDTO,
   ): Promise<CouponUserDTO> {
+    const couponEntity = await this.couponRepository.findOne(
+      createCouponUserDTO.idCoupon,
+    );
+
+    if (!couponEntity) throw new NotFoundException('Coupon not found');
+
+    const userEntity = await this.userRepository.findOne(idUser);
+
+    if (!userEntity) throw new NotFoundException('User not found');
+
+    if (userEntity.credits < couponEntity.credits)
+      throw new UnprocessableEntityException(
+        'Insufficient credits to the rescue of the coupon',
+      );
+
     const couponUser = await this.couponUserRepository.find({
       where: {
         idCoupon: createCouponUserDTO.idCoupon,
@@ -80,17 +98,20 @@ export class CouponService {
         'Coupon already assigned to the user',
       );
 
-    const couponEntity = await this.couponRepository.findOne(
-      createCouponUserDTO.idCoupon,
-    );
-
-    if (!couponEntity) throw new NotFoundException('Coupon not found');
-
     const couponUserEntity = this.couponUserRepository.create({
       ...createCouponUserDTO,
       ...{
         idUser,
         code: this.generateCode(),
+      },
+    });
+
+    console.log(userEntity.credits, couponEntity.credits);
+
+    await this.userRepository.save({
+      ...userEntity,
+      ...{
+        credits: userEntity.credits - couponEntity.credits,
       },
     });
 
