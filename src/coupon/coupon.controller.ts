@@ -16,7 +16,6 @@ import {
 } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserDTO } from '../user/dto/user.dto';
 import { CouponService } from './coupon.service';
 import { CouponDTO } from './dto/coupon.dto';
 import { CreateCouponDTO } from './dto/create-coupon.dto';
@@ -24,7 +23,7 @@ import { CreateCouponDTO } from './dto/create-coupon.dto';
 @ApiTags('coupon')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('v1/coupon')
+@Controller('v1/coupons')
 @Controller()
 export class CouponController {
   constructor(private readonly couponService: CouponService) {}
@@ -34,8 +33,8 @@ export class CouponController {
   @ApiOperation({ summary: 'Get all coupons' })
   @ApiOkResponse({
     description: 'The record has been successfully returned.',
-    type: UserDTO,
-    isArray: false,
+    type: CouponDTO,
+    isArray: true,
   })
   async getAll(): Promise<CouponDTO[]> {
     const couponsEntity = await this.couponService.getAll();
