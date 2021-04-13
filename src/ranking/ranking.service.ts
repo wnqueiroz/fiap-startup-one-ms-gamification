@@ -27,11 +27,11 @@ export class RankingService {
     let data = await this.userRepository
       .createQueryBuilder('user')
       .innerJoinAndSelect('user.progress', 'progress')
-      .where('progress.currentExperience >= :currentExperience', {
-        currentExperience: user.progress.currentExperience,
-      })
-      .andWhere('progress.currentLevel >= :currentLevel', {
+      .where('progress.currentLevel >= :currentLevel', {
         currentLevel: user.progress.currentLevel,
+      })
+      .orWhere('progress.currentExperience >= :currentExperience', {
+        currentExperience: user.progress.currentExperience,
       })
       .orderBy('progress.currentLevel', 'DESC')
       .addOrderBy('progress.currentExperience', 'DESC')
